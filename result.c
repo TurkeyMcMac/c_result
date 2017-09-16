@@ -10,14 +10,14 @@ typedef struct {		\
 		err_type err;	\
 	} val;			\
 } name;				\
-/*Makes a new result with the OK tag.*/	\
+/*Makes a result with the OK tag.*/	\
 name name##_ok(ok_type val) {		\
 	name r;				\
 	r.val.ok = val;			\
 	r.tag = name##_OK;		\
 	return r;			\
 }					\
-/*Makes a new result with the ERR tag.*/\
+/*Makes a result with the ERR tag.*/	\
 name name##_err(err_type val) {		\
 	name r;				\
 	r.val.err = val;		\
