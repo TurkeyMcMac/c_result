@@ -4,19 +4,30 @@
 
 make_result_type(result, char, int)
 
-int check_err(result* r) {
-	switch (r->tag) {
+void print(result r) {
+	switch (r.tag) {
 		case result_OK:
-			return 0;
+			printf("ok: '%c'\n", r.val.ok);
+			break;
 		case result_ERR:
-			return r->val.err;
+			printf("err: %d\n", r.val.err);
+			break;
 	}
 }
 
+struct result ok_to_err(char ok_val) {
+	return result_err((int)ok_val);
+}
+
+struct result err_to_ok(int err_val) {
+	return result_ok((char)err_val);
+}
+
 int main() {
-	result r_1 = result_ok('a');
-	result r_2 = result_err(-1);
-	printf("%d, %d\n", check_err(&r_1), check_err(&r_2));
+	result r_1 = result_map_ok(result_ok('/'), ok_to_err);
+	result r_2 = result_map_err(result_err(47), err_to_ok);
+	print(r_1);
+	print(r_2);
 	return 0;
 }
 
