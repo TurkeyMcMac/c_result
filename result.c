@@ -1,13 +1,13 @@
 #define make_result_type(name, ok_type, err_type) \
 typedef struct {		\
-	union {			\
-		ok_type ok;	\
-		err_type err;	\
-	} val;			\
 	enum {			\
 		name##_OK,	\
 		name##_ERR,	\
 	} tag;			\
+	union {			\
+		ok_type ok;	\
+		err_type err;	\
+	} val;			\
 } name;				\
 \
 name name##_ok(ok_type val) {	\
