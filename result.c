@@ -1,30 +1,30 @@
 #define make_result_type(name, ok_type, err_type) \
-typedef struct name {		\
-	union name##_val {	\
+typedef struct {		\
+	union {			\
 		ok_type ok;	\
 		err_type err;	\
 	} val;			\
-	enum name##_tag {	\
+	enum {			\
 		name##_OK,	\
 		name##_ERR,	\
 	} tag;			\
 } name;				\
 \
-struct name name##_ok(ok_type val) {	\
+name name##_ok(ok_type val) {	\
 	name r;				\
 	r.val.ok = val;			\
 	r.tag = name##_OK;		\
 	return r;			\
 }					\
 \
-struct name name##_err(err_type val) {	\
+name name##_err(err_type val) {	\
 	name r;				\
 	r.val.err = val;		\
 	r.tag = name##_ERR;		\
 	return r;			\
 }					\
 \
-struct name name##_map(name self, name (*f_ok)(ok_type), name (*f_err)(err_type)) {	\
+name name##_map(name self, name (*f_ok)(ok_type), name (*f_err)(err_type)) {	\
 	switch (self.tag) {								\
 		case name##_OK:								\
 			return (*f_ok)(self.val.ok);					\
@@ -33,7 +33,7 @@ struct name name##_map(name self, name (*f_ok)(ok_type), name (*f_err)(err_type)
 	}										\
 }											\
 \
-struct name name##_map_ok(name self, name (*f)(ok_type)) {	\
+name name##_map_ok(name self, name (*f)(ok_type)) {	\
 	switch (self.tag) {					\
 		case name##_OK:					\
 			return (*f)(self.val.ok);		\
@@ -42,7 +42,7 @@ struct name name##_map_ok(name self, name (*f)(ok_type)) {	\
 	}							\
 }								\
 \
-struct name name##_map_err(name self, name (*f)(err_type)) {	\
+name name##_map_err(name self, name (*f)(err_type)) {	\
 	switch (self.tag) {					\
 		case name##_OK:					\
 			return self;				\

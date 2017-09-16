@@ -15,11 +15,11 @@ void print(result r) {
 	}
 }
 
-struct result ok_to_err(char ok_val) {
+result ok_to_err(char ok_val) {
 	return result_err((int)ok_val);
 }
 
-struct result err_to_ok(int err_val) {
+result err_to_ok(int err_val) {
 	return result_ok((char)err_val);
 }
 
