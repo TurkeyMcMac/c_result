@@ -10,21 +10,21 @@ typedef struct {		\
 	} val;			\
 } name;				\
 \
-name name##_ok(ok_type val) {	\
+name name##_ok(ok_type val) {		\
 	name r;				\
 	r.val.ok = val;			\
 	r.tag = name##_OK;		\
 	return r;			\
 }					\
 \
-name name##_err(err_type val) {	\
+name name##_err(err_type val) {		\
 	name r;				\
 	r.val.err = val;		\
 	r.tag = name##_ERR;		\
 	return r;			\
 }					\
 \
-name name##_map(name self, name (*f_ok)(ok_type), name (*f_err)(err_type)) {	\
+name name##_map(name self, name (*f_ok)(ok_type), name (*f_err)(err_type)) {		\
 	switch (self.tag) {								\
 		case name##_OK:								\
 			return (*f_ok)(self.val.ok);					\
@@ -33,7 +33,7 @@ name name##_map(name self, name (*f_ok)(ok_type), name (*f_err)(err_type)) {	\
 	}										\
 }											\
 \
-name name##_map_ok(name self, name (*f)(ok_type)) {	\
+name name##_map_ok(name self, name (*f)(ok_type)) {		\
 	switch (self.tag) {					\
 		case name##_OK:					\
 			return (*f)(self.val.ok);		\
@@ -42,7 +42,7 @@ name name##_map_ok(name self, name (*f)(ok_type)) {	\
 	}							\
 }								\
 \
-name name##_map_err(name self, name (*f)(err_type)) {	\
+name name##_map_err(name self, name (*f)(err_type)) {		\
 	switch (self.tag) {					\
 		case name##_OK:					\
 			return self;				\
